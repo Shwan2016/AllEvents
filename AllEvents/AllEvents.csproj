@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201612030435283_PopulateEventTypeTable.Designer.cs">
       <DependentUpon>201612030435283_PopulateEventTypeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612030932403_AddNavigationPropertiesToEventTable.cs" />
+    <Compile Include="Migrations\201612030932403_AddNavigationPropertiesToEventTable.Designer.cs">
+      <DependentUpon>201612030932403_AddNavigationPropertiesToEventTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -281,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612030435283_PopulateEventTypeTable.resx">
       <DependentUpon>201612030435283_PopulateEventTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612030932403_AddNavigationPropertiesToEventTable.resx">
+      <DependentUpon>201612030932403_AddNavigationPropertiesToEventTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

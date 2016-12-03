@@ -1,5 +1,6 @@
 ﻿using AllEvents.Models;
 using AllEvents.ViewModels;
+using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -14,6 +15,7 @@ namespace AllEvents.Controllers
             _context = new ApplicationDbContext();
         }
 
+        [Authorize]
         public ActionResult Create()
         {
             var viewModel = new EventFormViewModel
@@ -22,6 +24,25 @@ namespace AllEvents.Controllers
             };
 
             return View(viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Create(EventFormViewModel viewModel)
+        {
+            var anEvent = new Event
+            {
+                CreatorId = User.Identity.GetUserId(),
+                Description = viewModel.Description,
+                DateTime = viewModel.DateTime,
+                EventTypeId = viewModel.EventType,
+                Location = viewModel.Location
+            };
+
+            _context.Events.Add(anEvent);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

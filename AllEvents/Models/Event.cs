@@ -6,9 +6,11 @@ namespace AllEvents.Models
     public class Event
     {
         public int Id { get; set; }
-        
-        [Required] 
+                 
         public ApplicationUser Creator { get; set; }
+
+        [Required]
+        public string CreatorId { get; set; }
 
         [Required]
         public string Description { get; set; }
@@ -30,8 +32,10 @@ namespace AllEvents.Models
 
         [StringLength(10)]
         public string ZipCode { get; set; }
-        
-        [Required] 
-        public EventType EventType { get; set; } 
+                 
+        public EventType EventType { get; set; }
+
+        [Required]
+        public int EventTypeId { get; set; } 
     }
 } 
