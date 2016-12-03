@@ -30,11 +30,16 @@ namespace AllEvents.Controllers
         [HttpPost]
         public ActionResult Create(EventFormViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                viewModel.EventTypes = _context.EventTypes.ToList();
+                return View("Create", viewModel);
+            }
             var anEvent = new Event
             {
                 CreatorId = User.Identity.GetUserId(),
                 Description = viewModel.Description,
-                DateTime = viewModel.DateTime,
+                DateTime = viewModel.GetDateTime(),
                 EventTypeId = viewModel.EventType,
                 Location = viewModel.Location
             };
