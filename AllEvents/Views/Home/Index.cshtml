@@ -22,8 +22,29 @@
                 <span class="eventType">
                     @events.EventType.Name
                 </span>
+                <button data-event-id="@events.Id" class="btn btn-default bt-sm pull-right js-toggle-attendance">Going?</button>
              </div>
         </li>
     }
-
+     
 </ul> 
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $(".js-toggle-attendance").click(function(e) {
+                var button = $(e.target);
+                $.post("/api/attendances", { eventId: button.attr("data-event-id") })
+                    .done(function() {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-primary")
+                            .text("Going");
+                    })
+                    .fail(function() {
+                        alert("Was not successful!");
+                    });
+            }); 
+        });
+    </script>
+}

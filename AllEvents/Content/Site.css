@@ -97,10 +97,11 @@ h6,
 }
 
 .btn {
-    font-size: 17px;
+    /*font-size: 17px;
+    padding: 7px 20px;*/
     background-color: #47374C;
     border-color: #47374C;
-    padding: 7px 20px; 
+    color: white;    
     -ms-border-radius: 9px;
     border-radius: 9px;
 }
@@ -156,4 +157,5 @@ h6,
 
 .events > li .details .eventType {
     font-size: 15px;
+    padding-right: 10px;
 }
