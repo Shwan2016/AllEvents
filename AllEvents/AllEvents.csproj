@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201612030932403_AddNavigationPropertiesToEventTable.Designer.cs">
       <DependentUpon>201612030932403_AddNavigationPropertiesToEventTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612040205131_AddNameToApplicationUser.cs" />
+    <Compile Include="Migrations\201612040205131_AddNameToApplicationUser.Designer.cs">
+      <DependentUpon>201612040205131_AddNameToApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -204,6 +208,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\EventFormViewModel.cs" />
+    <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\UpComingDate.cs" />
     <Compile Include="ViewModels\ValidTime.cs" />
   </ItemGroup>
@@ -290,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612030932403_AddNavigationPropertiesToEventTable.resx">
       <DependentUpon>201612030932403_AddNavigationPropertiesToEventTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612040205131_AddNameToApplicationUser.resx">
+      <DependentUpon>201612040205131_AddNameToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

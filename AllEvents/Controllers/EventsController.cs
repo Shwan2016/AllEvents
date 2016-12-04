@@ -28,6 +28,7 @@ namespace AllEvents.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(EventFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -38,10 +39,10 @@ namespace AllEvents.Controllers
             var anEvent = new Event
             {
                 CreatorId = User.Identity.GetUserId(),
+                Location = viewModel.Location,
                 Description = viewModel.Description,
                 DateTime = viewModel.GetDateTime(),
-                EventTypeId = viewModel.EventType,
-                Location = viewModel.Location
+                EventTypeId = viewModel.EventType
             };
 
             _context.Events.Add(anEvent);

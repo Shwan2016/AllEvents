@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 90px;
     padding-bottom: 20px;
 }
 
@@ -21,4 +21,139 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+span.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
+/* Bootstra Overrides */
+
+.navbar-inverse {
+    background-color: #173942; 
+    border-color: #173942;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #FFF;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: rgba(7, 188, 236, 0.18);
+}
+
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+    border-top-color: #fff;
+    border-bottom-color: #fff;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+.dropdown-menu {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+body {
+    font-size: 17px;
+}
+
+body,
+h1,
+h2,
+h3, 
+h4,
+h5,
+h6,
+.h1, 
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+} 
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    font-size: 17px;
+    -ms-border-radius: 9px;
+    border-radius: 9px;
+}
+
+.form-control:focus {
+    border-color: #8a5f75;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.btn {
+    font-size: 17px;
+    background-color: #47374C;
+    border-color: #47374C;
+    padding: 7px 20px; 
+    -ms-border-radius: 9px;
+    border-radius: 9px;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
+    background-color: #173942;
+    border-color: rgb(30, 73, 84);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+    background-color: #173942;
+    border-color: #1a4550;
+}
+
+/* Upcoming Events Page Style */
+.events {
+    list-style-type: none;
+}
+
+.events > li {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.events > li .date {
+    text-align: center;
+    width: 75px;
+    background: #fcfcfc;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.events > li .date .weekdays {
+    color: red;
+    font-size: 12px;
+}
+
+.events > li .date .day {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.events > li .details {
+    position: absolute;
+    top: 0px;
+    left: 100px;
+}
+
+.events > li .details .creator {
+    font-weight: bold;
+    display: block;
+}
+
+.events > li .details .eventType {
+    font-size: 15px;
 }

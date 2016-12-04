@@ -20,6 +20,7 @@ namespace AllEvents.ViewModels
         [Required]
         [ValidTime]
         public string Time { get; set; }
+
         [Required]
         public int EventType { get; set; }
 
@@ -27,4 +28,4 @@ namespace AllEvents.ViewModels
 
         public DateTime GetDateTime() => DateTime.Parse($"{Date} {Time}");
     }
-}     
+} 
