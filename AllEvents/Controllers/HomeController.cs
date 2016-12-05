@@ -1,4 +1,5 @@
 ﻿using AllEvents.Models;
+using AllEvents.ViewModels;
 using System;
 using System.Data.Entity;
 using System.Linq;
@@ -21,7 +22,14 @@ namespace AllEvents.Controllers
                 .Include(e => e.Creator)
                 .Include(e => e.EventType)
                 .Where(e => e.DateTime > DateTime.Now);
-            return View(upcomingEvents);
+
+            var viewModel = new EventsViewModel
+            {
+                UpcomingEvents = upcomingEvents,
+                ShowEvents = User.Identity.IsAuthenticated
+            };
+
+            return View(viewModel);
         }
 
         public ActionResult About()

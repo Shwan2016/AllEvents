@@ -1,0 +1,41 @@
+﻿@model AllEvents.ViewModels.EventsViewModel
+@{
+    ViewBag.Title = "Attending";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Attending</h2>
+
+<ul class="events">
+    @foreach (var events in Model.UpcomingEvents)
+    {
+        <li>
+            <div class="date">
+                <div class="weekdays">
+                    @events.DateTime.ToString("dddd")
+                </div>
+                <div class="day">
+                    @events.DateTime.ToString("d ")
+                </div>
+            </div>
+            <div class="details">
+                <span class="creator">
+                    @events.Creator.Name
+                    @if (Model.ShowEvents)
+                    {
+                        <button class="btn btn-link btn-sm js-toggle-follow" data-user-id="@events.CreatorId">Follow</button>
+                    }
+
+                </span>
+                <span class="eventType">
+                    @events.EventType.Name
+                </span>
+                @if (Model.ShowEvents)
+                {
+                    <button data-event-id="@events.Id" class="btn btn-default bt-sm pull-right js-toggle-attendance">Going?</button>
+                }
+            </div>
+        </li>
+    }
+
+</ul>

@@ -102,8 +102,8 @@ h6,
     background-color: #47374C;
     border-color: #47374C;
     color: white;    
-    -ms-border-radius: 9px;
-    border-radius: 9px;
+    /*-ms-border-radius: 9px;
+    border-radius: 9px;*/
 }
 
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
