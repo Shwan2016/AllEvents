@@ -1,0 +1,14 @@
+﻿@model IEnumerable<AllEvents.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Pages that I Follow</h1>
+<ul>
+    @foreach (var creator in Model)
+    {
+        <li>@creator.Name</li>
+    }
+</ul>
+
