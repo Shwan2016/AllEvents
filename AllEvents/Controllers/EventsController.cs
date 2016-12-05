@@ -55,10 +55,33 @@ namespace AllEvents.Controllers
         {
             var viewModel = new EventFormViewModel
             {
-                EventTypes = _context.EventTypes.ToList()
+                EventTypes = _context.EventTypes.ToList(),
+                Heading = "Add an Event"
             };
 
-            return View(viewModel);
+            return View("EventForm", viewModel);
+        }
+
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            var events = _context.Events.Single(e => e.Id == id && e.CreatorId == userId);
+
+            var viewModel = new EventFormViewModel
+            {
+                Heading = "Eidt an Event",
+                Id = events.Id,
+                EventTypes = _context.EventTypes.ToList(),
+                Date = events.DateTime.ToString("d MMM yyyy"),
+                Time = events.DateTime.ToString("HH:mm"),
+                EventType = events.EventTypeId,
+                Location = events.Location,
+                Description = events.Description
+
+            };
+
+            return View("EventForm", viewModel);
         }
 
         [Authorize]
@@ -69,7 +92,7 @@ namespace AllEvents.Controllers
             if (!ModelState.IsValid)
             {
                 viewModel.EventTypes = _context.EventTypes.ToList();
-                return View("Create", viewModel);
+                return View("EventForm", viewModel);
             }
             var anEvent = new Event
             {
@@ -81,6 +104,28 @@ namespace AllEvents.Controllers
             };
 
             _context.Events.Add(anEvent);
+            _context.SaveChanges();
+
+            return RedirectToAction("Mine", "Events");
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(EventFormViewModel viewModel) 
+        {
+            if (!ModelState.IsValid)
+            {
+                viewModel.EventTypes = _context.EventTypes.ToList();
+                return View("EventForm", viewModel);
+            }
+            var userId = User.Identity.GetUserId();
+            var anEvent = _context.Events.Single(e => e.Id == viewModel.Id && e.CreatorId == userId);
+            anEvent.Location = viewModel.Location;
+            anEvent.Description = viewModel.Description;
+            anEvent.DateTime = viewModel.GetDateTime();
+            anEvent.EventTypeId = viewModel.EventType; 
+           
             _context.SaveChanges();
 
             return RedirectToAction("Mine", "Events");

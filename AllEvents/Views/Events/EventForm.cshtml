@@ -1,15 +1,16 @@
 ﻿@model AllEvents.ViewModels.EventFormViewModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = Model.Heading;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add an Event</h2>
+<h2>@Model.Heading</h2>
 
-@using (Html.BeginForm("Create", "Events"))
+@using (Html.BeginForm(Model.Action, "Events"))
 {
     <p class="alert alert-info">All fields are <strong>required</strong>.</p>
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
     <div class="form-group">
         @Html.LabelFor(m => m.Location)
         @Html.TextBoxFor(m => m.Location, new { @class = "form-control", autofocus = "autofocus" })

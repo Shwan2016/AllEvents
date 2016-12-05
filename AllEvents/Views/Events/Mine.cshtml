@@ -20,11 +20,16 @@
             </div>
             <div class="details">
                 <span class="creator">
-                    @events.Location;      
+                    @events.Location
                 </span>
                 <span class="eventType">
                     @events.EventType.Name
-                </span>              
+                </span>
+                <div class="actions">
+                    <a href="@Url.Action("Edit", "Events", new {id = events.Id})">
+                        Edit
+                    </a>
+                </div>
             </div>
         </li>
     }

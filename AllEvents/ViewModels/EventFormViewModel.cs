@@ -7,6 +7,8 @@ namespace AllEvents.ViewModels
 {
     public class EventFormViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         public string Location { get; set; }
 
@@ -26,6 +28,10 @@ namespace AllEvents.ViewModels
 
         public IEnumerable<EventType> EventTypes { get; set; }
 
+        public string Heading { get; set; }
+
+        public string Action => (Id != 0) ? "Update" : "Create";
+
         public DateTime GetDateTime() => DateTime.Parse($"{Date} {Time}");
     }
-} 
+}  
