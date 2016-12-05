@@ -6,6 +6,8 @@ namespace AllEvents.Models
     public class Event
     {
         public int Id { get; set; }
+
+        public bool IsCanceled { get; set; } 
                  
         public ApplicationUser Creator { get; set; }
 

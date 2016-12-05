@@ -22,7 +22,10 @@ namespace AllEvents.Controllers
         {
             var userId = User.Identity.GetUserId();
             var events = _context.Events
-                .Where(e => e.CreatorId == userId && e.DateTime > DateTime.Now)
+                .Where(e => 
+                e.CreatorId == userId && 
+                e.DateTime > DateTime.Now && 
+                !e.IsCanceled)
                 .Include(e => e.EventType)
                 .ToList();
 

@@ -21,6 +21,12 @@
             <div class="details">
                 <span class="creator">
                     @events.Creator.Name
+
+                    @if (events.IsCanceled)
+                    {
+                        <span class="label label-warning">Canceled</span>
+                    }
+
                     @if (Model.ShowEvents)
                     {
                         <button class="btn btn-link btn-sm js-toggle-follow" data-user-id="@events.CreatorId">Follow</button>
@@ -30,7 +36,7 @@
                 <span class="eventType">
                     @events.EventType.Name
                 </span>
-                @if (Model.ShowEvents)
+                @if (Model.ShowEvents && !events.IsCanceled)
                 {
                     <button data-event-id="@events.Id" class="btn btn-default bt-sm pull-right js-toggle-attendance">Going?</button>
                 }

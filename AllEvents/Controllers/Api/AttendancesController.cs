@@ -1,10 +1,10 @@
-﻿using AllEvents.Dtos;
+﻿using System.Linq;
+using System.Web.Http;
+using AllEvents.Dtos;
 using AllEvents.Models;
 using Microsoft.AspNet.Identity;
-using System.Linq;
-using System.Web.Http;
 
-namespace AllEvents.Controllers
+namespace AllEvents.Controllers.Api
 {
     [Authorize]
     public class AttendancesController : ApiController

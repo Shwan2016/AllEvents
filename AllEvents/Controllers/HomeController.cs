@@ -21,7 +21,7 @@ namespace AllEvents.Controllers
             var upcomingEvents = _context.Events
                 .Include(e => e.Creator)
                 .Include(e => e.EventType)
-                .Where(e => e.DateTime > DateTime.Now);
+                .Where(e => e.DateTime > DateTime.Now &&  !e.IsCanceled);
 
             var viewModel = new EventsViewModel
             {
