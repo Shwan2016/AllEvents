@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - All Events</title>
@@ -8,8 +9,9 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-</head>
-<body>
+
+    </head>
+    <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -18,26 +20,37 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a class="navbar-brand" href=""> <img src="https://lh3.googleusercontent.com/EpGFIIx3rCGo3HPwsNID-40TXK8GPLQ_VOTKb5k5DYX7j9SduwLgRqnsFNV3jpmdNFo=w256" id="logo" class="img-responsive" alt="Your Logo" width="36" height="36"></a> 	
+
                 @Html.ActionLink("All Events", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Add an Event", "Create", "Events")</li>                    
+                    <li>@Html.ActionLink("Add an Event", "Create", "Events")</li>
+                    <li><a href="@Url.Action("Attending", "Events")">Attending Events</a></li>
+                    <li><a href="@Url.Action("Mine", "Events")">Future Events</a></li>
                 </ul>
+                    
+                    
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - All Events</p>
-        </footer>
-    </div>
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - All Events</p>
+            </footer>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+        <script>tinymce.init({ selector:'textarea' });</script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+
+
+
+    </body>
 </html>

@@ -18,13 +18,14 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44320</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -229,6 +230,26 @@
     <Compile Include="Migrations\201612051301465_AddIsCanceledToEventTable.Designer.cs">
       <DependentUpon>201612051301465_AddIsCanceledToEventTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612052027017_AddNotificationAndUserNotificationTables.cs" />
+    <Compile Include="Migrations\201612052027017_AddNotificationAndUserNotificationTables.Designer.cs">
+      <DependentUpon>201612052027017_AddNotificationAndUserNotificationTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612090457067_AddPriceForEventTable.cs" />
+    <Compile Include="Migrations\201612090457067_AddPriceForEventTable.Designer.cs">
+      <DependentUpon>201612090457067_AddPriceForEventTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612091105182_AddImageForEventTable.cs" />
+    <Compile Include="Migrations\201612091105182_AddImageForEventTable.Designer.cs">
+      <DependentUpon>201612091105182_AddImageForEventTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612100959004_AddDataAnnotationToDescription.cs" />
+    <Compile Include="Migrations\201612100959004_AddDataAnnotationToDescription.Designer.cs">
+      <DependentUpon>201612100959004_AddDataAnnotationToDescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612101033593_RemoveDataAnnotationToDescription.cs" />
+    <Compile Include="Migrations\201612101033593_RemoveDataAnnotationToDescription.Designer.cs">
+      <DependentUpon>201612101033593_RemoveDataAnnotationToDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -238,8 +259,12 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Following.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationType.cs" />
+    <Compile Include="Models\UserNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\EventDetailsViewModel.cs" />
     <Compile Include="ViewModels\EventFormViewModel.cs" />
     <Compile Include="ViewModels\EventsViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
@@ -247,6 +272,10 @@
     <Compile Include="ViewModels\ValidTime.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-AllEvents-20161202084503.mdf" />
+    <Content Include="App_Data\aspnet-AllEvents-20161202084503_log.ldf">
+      <DependentUpon>aspnet-AllEvents-20161202084503.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -256,6 +285,7 @@
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -268,7 +298,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -306,9 +338,10 @@
     <Content Include="Views\Events\Attending.cshtml" />
     <Content Include="Views\Followees\Index.cshtml" />
     <Content Include="Views\Events\Mine.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Content\Upload\Image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -346,6 +379,24 @@
     <EmbeddedResource Include="Migrations\201612051301465_AddIsCanceledToEventTable.resx">
       <DependentUpon>201612051301465_AddIsCanceledToEventTable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612052027017_AddNotificationAndUserNotificationTables.resx">
+      <DependentUpon>201612052027017_AddNotificationAndUserNotificationTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612090457067_AddPriceForEventTable.resx">
+      <DependentUpon>201612090457067_AddPriceForEventTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612091105182_AddImageForEventTable.resx">
+      <DependentUpon>201612091105182_AddImageForEventTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612100959004_AddDataAnnotationToDescription.resx">
+      <DependentUpon>201612100959004_AddDataAnnotationToDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612101033593_RemoveDataAnnotationToDescription.resx">
+      <DependentUpon>201612101033593_RemoveDataAnnotationToDescription.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -365,7 +416,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49837/</IISUrl>
+          <IISUrl>https://localhost:44320/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,14 +1,16 @@
-﻿@model AllEvents.ViewModels.EventFormViewModel
+﻿@using System.Web.UI.WebControls
+@model AllEvents.ViewModels.EventFormViewModel
 @{
     ViewBag.Title = Model.Heading;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <h2>@Model.Heading</h2>
 
-@using (Html.BeginForm(Model.Action, "Events"))
+@using (Html.BeginForm(Model.Action, "Events", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <p class="alert alert-info">All fields are <strong>required</strong>.</p>
+    @Html.ValidationSummary(false, "", new { @class = "text-success" })
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.Id)
     <div class="form-group">
@@ -16,11 +18,24 @@
         @Html.TextBoxFor(m => m.Location, new { @class = "form-control", autofocus = "autofocus" })
         @Html.ValidationMessageFor(m => m.Location)
     </div>
+ 
+    <div class="form-group">
+        
+
+        @Html.LabelFor(m => m.Description)        
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })        
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Description)
-        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Description)
+        @Html.LabelFor(m => m.Image)
+        <input type="file" name="Image" id="Image" accept=".jpg,.png,.jpeg" />
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Price) 
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", PlaceHolder = "Price" })
+        @Html.ValidationMessageFor(m => m.Price) 
     </div>
 
     <div class="form-group">
@@ -41,7 +56,7 @@
         @Html.ValidationMessageFor(m => m.EventType)
     </div>
 
-    <button type="submit" class="btn btn-success">Post</button>
+    <button type="submit" value="Create" class="btn btn-success">Post</button>
 }
 
 @section scripts

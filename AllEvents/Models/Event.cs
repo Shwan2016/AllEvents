@@ -16,8 +16,14 @@ namespace AllEvents.Models
 
         [Required]
         public string Description { get; set; }
-         
-        public DateTime DateTime { get; set; } 
+
+        [Required]
+        public string Image { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
+
+        public DateTime DateTime { get; set; }  
 
         [Required]
         [StringLength(255)]

@@ -1,62 +1,175 @@
 ﻿@model AllEvents.ViewModels.EventsViewModel
 @{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int counter = 0;
 }
 
-<ul class="events">
-    @foreach (var events in Model.UpcomingEvents)
-    {
-        <li>
-            <div class="date">
-                <div class="weekdays">
-                    @events.DateTime.ToString("dddd")
-                </div>
-                <div class="day">
-                    @events.DateTime.ToString("d ")
-                </div>
-            </div>
-            <div class="details">
-                <span class="creator">
-                    @events.Creator.Name
-                    @if (Model.ShowEvents)
-                    {
-                        <button class="btn btn-link btn-sm js-toggle-follow" data-user-id="@events.CreatorId">Follow</button>
-                    }
 
-                </span>
-                <span class="eventType">
-                    @events.EventType.Name
-                </span>
-                    @if (Model.ShowEvents)
-                    {
-                        <button data-event-id="@events.Id" class="btn btn-default bt-sm pull-right js-toggle-attendance">Going?</button>
-                    }
-            </div>
-        </li>
-    }
+@using (Html.BeginForm("Search", "Events"))
 
-</ul> 
+{
+    <div class="form-group">
+        <div id="searchEvents" class="input-group">
+            @Html.TextBoxFor(m => m.SearchForEvent, new { @class = "form-control", PlaceHolder = "Search by events, location.." })
+            <span class="input-group-addon">
+                <i class="glyphicon glyphicon-search"></i>
+            </span>
+        </div>
+    </div>
+}
+
+<div class="events">
+    <div class="row">
+
+        @foreach (var events in Model.UpcomingEvents)
+        {
+
+            if (counter != 0 && counter % 2 == 0)
+            {
+
+
+
+                
+            @:</div>
+            @:<div class="row">
+        }
+
+            <div id="moreEvents">
+                <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
+
+                    <div class="thumbnails">
+
+                        <div class="col-lg-5 col-md-5 col-sm-10">
+                            <div class="thumbnail">
+                                <img src="" alt="">
+                                <div class="label label-info price"><span class="glyphicon glyphicon-tag"><sup>$</sup>@events.Price</span></div>
+                                <div class="caption">
+                                    <img style="background-image: url('@Url.Content("~/Content/Upload/Image/" + events.Image)')" width="380" height="300" class="hii" />
+
+                                    @*<img class="src" width="400" height="340">*@
+                                    <h3></h3>
+                                    <hr />
+
+                                    <span id="eventType" class="eventType">
+                                        @events.EventType.Name
+                                    </span>
+
+
+                                    <div>
+                                        @Html.Raw(@events.Description)
+                                    </div>
+                                    @*<div>
+                                        <p>Event is created by @events.Creator.Name</p>
+                                    </div>*@
+                                
+
+                                    <div class="date">
+                                        <div class="weekdays">
+                                            @events.DateTime.ToString("MMMM")
+                                        </div>
+                                        <div class="weekdays">
+                                            @events.DateTime.ToString("d ")
+                                        </div>
+                                        <div class="day">
+                                            @events.DateTime.ToString("yyyy")
+                                        </div>
+                                        <div class="day">
+                                            @events.DateTime.ToString("hh:mm tt")
+                                        </div>
+                                    </div>
+
+
+                                    <div class="details">
+                                        <span class="creator">
+                                            <a href="@Url.Action("Details", "Events", new {id = events.Id})">
+                                                @events.Creator.Name
+                                            </a>
+                                            @if (events.IsCanceled)
+                                            {
+                                                <span class="label label-warning">Canceled</span>
+                                            }
+
+                                            @if (Model.ShowEvents)
+                                            {
+                                                <button class="btn btn-link btn-sm js-toggle-follow" data-user-id="@events.CreatorId">
+                                                    Follow
+                                                </button>
+                                            }
+                                        </span>
+
+                                        @if (Model.ShowEvents && !events.IsCanceled)
+                                        {
+                                            <button data-event-id="@events.Id"
+                                                    class="btn @(Model.Attendances.Contains(events.Id) ? "btn-info" : "btn-default")
+                                btn-sm pull-right js-toggle-attendance">
+                                                Going
+                                            </button>
+                                        }
+                                    </div>
+
+                                   
+                                    
+                                        @*<a class="btn btn-info btn-small">Like</a> <a class="btn btn-default btn-small">Follow </a>*@
+                                    
+
+                                    <!-- end Caption -->
+                                </div> <!-- end thumbnail -->
+
+                            </div> <!--end col-6 -->
+
+                        </div> <!-- end row -->
+                    </div> <!-- col-12 -->
+                </div> <!-- end MoreEvents -->
+            </div>
+
+            
+            counter++;
+        }
+
+
+    </div>
+</div>
+
+
+
 @section scripts
 {
     <script>
-        $(document).ready(function() {
-            $(".js-toggle-attendance").click(function(e) {
+        $(document).ready(function () {
+            $(".js-toggle-attendance").click(function (e) {
                 var button = $(e.target);
-                $.post("/api/attendances", { eventId: button.attr("data-event-id") })
-                    .done(function() {
-                        button
-                            .removeClass("btn-default")
-                            .addClass("btn-primary")
-                            .text("Going");
+                if (button.hasClass("btn-default")) {
+                    $.post("/final/api/attendances", { eventId: button.attr("data-event-id") })
+                        .done(function () {
+                            button
+                                .removeClass("btn-default")
+                                .addClass("btn-info")
+                                .text("Going");
+                        })
+                        .fail(function () {
+                            alert("It was not successful!");
+                        });
+                } else {
+                    $.ajax({
+                        url: "/final/api/attendances/" + button.attr("data-event-id"),
+                        method: "DELETE"
                     })
-                    .fail(function() {
-                        alert("It was not successful!");
-                    });
+                            .done(function () {
+                                button
+                                    .removeClass("btn-info")
+                                    .addClass("btn-default")
+                                    .text("Going?");
+                            })
+                        .fail(function () {
+                            alert("It was not successful!");
+                        });
+                }
             });
 
             $(".js-toggle-follow").click(function (e) {
                 var button = $(e.target);
-                $.post("/api/followings", { followeeId: button.attr("data-user-id") })
+                $.post("/final/api/followings", { followeeId: button.attr("data-user-id") })
                     .done(function () {
                         button.text("Following");
                     })

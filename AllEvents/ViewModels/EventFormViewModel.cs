@@ -13,7 +13,10 @@ namespace AllEvents.ViewModels
         public string Location { get; set; }
 
         [Required]
-        public string Description { get; set; } 
+        public string Description { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
 
         [Required]
         [UpComingDate]
@@ -31,6 +34,9 @@ namespace AllEvents.ViewModels
         public string Heading { get; set; }
 
         public string Action => (Id != 0) ? "Update" : "Create";
+
+        [Required]
+        public string Image { get; set; }
 
         public DateTime GetDateTime() => DateTime.Parse($"{Date} {Time}");
     }

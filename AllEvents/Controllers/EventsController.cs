@@ -3,7 +3,9 @@ using AllEvents.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace AllEvents.Controllers
@@ -43,13 +45,26 @@ namespace AllEvents.Controllers
                 .Include(e => e.EventType)
                 .ToList();
 
+            var attandances = _context.Attendances
+                .Where(a => a.AttendeeId == userId && a.Event.DateTime > DateTime.Now)
+                .ToList()
+                .ToLookup(a => a.EventId);
+
             var viewModel = new EventsViewModel 
             {
                 UpcomingEvents = events,
-                ShowEvents = User.Identity.IsAuthenticated
+                ShowEvents = User.Identity.IsAuthenticated,
+                Attendances = attandances 
             };
-
+              
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Search(EventsViewModel viewModel)
+        {
+             
+            return RedirectToAction("Index", "Home", new { query = viewModel.SearchForEvent });
         }
 
 
@@ -80,7 +95,9 @@ namespace AllEvents.Controllers
                 Time = events.DateTime.ToString("HH:mm"),
                 EventType = events.EventTypeId,
                 Location = events.Location,
-                Description = events.Description
+                Description = events.Description,
+                Image = events.Image,
+                Price = events.Price
 
             };
 
@@ -90,18 +107,27 @@ namespace AllEvents.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(EventFormViewModel viewModel)
+        [ValidateInput(false)]
+        public ActionResult Create(EventFormViewModel viewModel, HttpPostedFileBase Image)
         {
             if (!ModelState.IsValid)
-            {
+            {               
                 viewModel.EventTypes = _context.EventTypes.ToList();
-                return View("EventForm", viewModel);
+                return View("EventForm", viewModel); 
             }
+            FileInfo sllaw = new FileInfo(Image.FileName);
+            string photo = Guid.NewGuid().ToString("N") + sllaw.Extension;
+            Image.SaveAs(Server.MapPath("~/Content/Upload/Image/" + photo));
+            viewModel.Image = photo;
+
+
             var anEvent = new Event
             {
                 CreatorId = User.Identity.GetUserId(),
                 Location = viewModel.Location,
                 Description = viewModel.Description,
+                Image = photo,
+                Price = viewModel.Price,
                 DateTime = viewModel.GetDateTime(),
                 EventTypeId = viewModel.EventType
             };
@@ -126,12 +152,40 @@ namespace AllEvents.Controllers
             var anEvent = _context.Events.Single(e => e.Id == viewModel.Id && e.CreatorId == userId);
             anEvent.Location = viewModel.Location;
             anEvent.Description = viewModel.Description;
+            anEvent.Image = viewModel.Image;
+            anEvent.Price = viewModel.Price;
             anEvent.DateTime = viewModel.GetDateTime();
             anEvent.EventTypeId = viewModel.EventType; 
            
             _context.SaveChanges();
 
             return RedirectToAction("Mine", "Events");
+        }
+
+        public ActionResult Details(int id)
+        {
+            var anEvent = _context.Events
+                .Include(e => e.Creator)
+                .Include(e => e.EventType)
+                .SingleOrDefault(e => e.Id == id);
+            if (anEvent == null)
+                return HttpNotFound();
+
+            var viewModel = new EventDetailsViewModel {Event = anEvent};
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                viewModel.IsAttending = _context.Attendances
+                    .Any(a => a.EventId == anEvent.Id && a.AttendeeId == userId);
+
+                viewModel.IsFollowing = _context.Followings
+                    .Any(f => f.FolloweeId == anEvent.CreatorId && f.FollowerId == userId);
+            }
+
+            return View("Details", viewModel);
+
         }
     }
 }
