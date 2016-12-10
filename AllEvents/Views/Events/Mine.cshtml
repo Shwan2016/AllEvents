@@ -10,9 +10,6 @@
     @foreach (var events in Model)
     {
 
-
-
-
         <div class="date">
             <div class="weekdays">
                 @events.DateTime.ToString("MMMM")
@@ -37,10 +34,6 @@
                     @events.Location
             </span>
             
-
-
-          
-
             <div class="actions">
                 <a href="@Url.Action("Edit", "Events", new {id = events.Id})">
                     Edit
@@ -48,10 +41,8 @@
                 <a href="#" class="js-cancel-event" data-event-id="@events.Id">
                     Cancel
                 </a>                
-            </div>
-            
-        </div>
-       
+            </div>            
+        </div>    
     }
 
 </div>
